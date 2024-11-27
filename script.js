@@ -18,6 +18,8 @@ class Apple {
     this.size = size;
     this.dx = dx;
     this.dy = dy;
+}
+    
  draw() {
   ctx.beginPath();
   ctx.arc(this.x + this.size / 2, this.y + this.size / 2, this.size / 2, 0, Math.PI * 2);
