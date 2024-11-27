@@ -7,15 +7,10 @@ canvas.height = window.innerHeight;
 
 // Apple image
 const appleImage = new Image();
-appleImage.src = 'apple.png'; // Ensure the file is in the same directory as this script
+appleImage.src = 'apple.png'; // Ensure the file is named correctly and in the same folder
 
-// Log messages to check if the image loads
-appleImage.onload = () => {
-  console.log("Apple image loaded successfully.");
-  animate();
-};
 appleImage.onerror = () => {
-  console.error("Failed to load apple.png. Check if the file exists and the path is correct.");
+  console.error("Failed to load apple.png. Ensure the file exists.");
 };
 
 // Apple class
@@ -29,7 +24,16 @@ class Apple {
   }
 
   draw() {
-    ctx.drawImage(appleImage, this.x, this.y, this.size, this.size);
+    if (appleImage.complete && appleImage.naturalHeight !== 0) {
+      ctx.drawImage(appleImage, this.x, this.y, this.size, this.size);
+    } else {
+      // Fallback to a red circle
+      ctx.beginPath();
+      ctx.arc(this.x + this.size / 2, this.y + this.size / 2, this.size / 2, 0, Math.PI * 2);
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.closePath();
+    }
   }
 
   update() {
@@ -61,3 +65,6 @@ function animate() {
   apples.forEach(apple => apple.update());
   requestAnimationFrame(animate);
 }
+
+// Start the animation
+appleImage.onload = animate;
