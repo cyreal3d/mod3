@@ -62,3 +62,7 @@ function animate() {
 appleImage.onload = () => {
   animate();
 };
+
+appleImage.onerror = () => {
+  console.error("Failed to load apple image. Check the file path and name.");
+};
